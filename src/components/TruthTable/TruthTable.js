@@ -8,12 +8,8 @@ import useTruthTable from '../../hooks/useTruthTable'
 const TruthTable = () => {
   const [numberOfInputs, setNumberOfInputs] = useState(2)
   const { results, handleChange } = useTruthTable(numberOfInputs)
-  const headers = [...getHeaders(numberOfInputs), 'y']
+  const headers = getHeaders(numberOfInputs)
   const rows = getRows(numberOfInputs)
-
-  const handleNumberOfInputsChange = e => {
-    setNumberOfInputs(e.target.value)
-  }
 
   return (
     <div>
@@ -23,7 +19,7 @@ const TruthTable = () => {
           type="number"
           value={numberOfInputs}
           min="1"
-          onChange={handleNumberOfInputsChange}
+          onChange={e => setNumberOfInputs(e.target.value)}
         />
         <FormText>
           Please note you are generating 2 ^ n * (n + 1) table cells, numbers
@@ -36,13 +32,18 @@ const TruthTable = () => {
             <Table bordered striped>
               <thead>
                 <tr>
-                  {headers.map((i, key) => (
-                    <th key={key}>
-                      <span>
-                        x<sub>{i}</sub>
-                      </span>
-                    </th>
-                  ))}
+                  {[...headers, 'y'].map(
+                    (header, key) =>
+                      header !== 'y' ? (
+                        <th key={key}>
+                          <span>
+                            x<sub>{header}</sub>
+                          </span>
+                        </th>
+                      ) : (
+                        <th>y</th>
+                      )
+                  )}
                 </tr>
               </thead>
               <tbody>
