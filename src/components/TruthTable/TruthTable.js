@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Table, FormGroup, Label, Input, FormText } from 'reactstrap'
 import TableWrapper from '../Misc/TableWrapper'
+import KNF from '../NormalForms/KKNF'
+import DNF from '../NormalForms/KDNF'
 
-import { getHeaders, getRows } from './getTruthTable'
 import useTruthTable from '../../hooks/useTruthTable'
 
 const TruthTable = () => {
-  const [numberOfInputs, setNumberOfInputs] = useState(2)
-  const { results, handleChange } = useTruthTable(numberOfInputs)
-  const headers = getHeaders(numberOfInputs)
-  const rows = getRows(numberOfInputs)
+  const {
+    numberOfInputs,
+    handleInputsChange,
+    headers,
+    rows,
+    results,
+    handleResultChange,
+    expressions
+  } = useTruthTable(2)
+
+  const trueExpressions = expressions
+    .filter(exp => exp.result)
+    .map(exp => exp.inputs)
+  const falseExpressions = expressions
+    .filter(exp => !exp.result)
+    .map(exp => exp.inputs)
+
+  const isTautology = falseExpressions.length === 0
+  const isContradiction = trueExpressions.length === 0
 
   return (
     <div>
@@ -19,11 +35,17 @@ const TruthTable = () => {
           type="number"
           value={numberOfInputs}
           min="1"
-          onChange={e => setNumberOfInputs(e.target.value)}
+          onChange={handleInputsChange}
         />
         <FormText>
           Please note you are generating 2 ^ n * (n + 1) table cells, numbers
-          bigger than 12 will probably crash your browser 💣👻
+          bigger than 12 will probably crash your browser{' '}
+          <span role="img" aria-label="bomb emoji">
+            💣
+          </span>
+          <span role="img" aria-label="ghost emoji">
+            👻
+          </span>
         </FormText>
       </FormGroup>
       {numberOfInputs > 0 ? (
@@ -41,7 +63,7 @@ const TruthTable = () => {
                           </span>
                         </th>
                       ) : (
-                        <th>y</th>
+                        <th key={key}>y</th>
                       )
                   )}
                 </tr>
@@ -54,7 +76,7 @@ const TruthTable = () => {
                       <select
                         name={rowNumber}
                         value={results[rowNumber]}
-                        onChange={handleChange}
+                        onChange={handleResultChange}
                       >
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -67,6 +89,10 @@ const TruthTable = () => {
               </tbody>
             </Table>
           </TableWrapper>
+          {isTautology && <p>Formula is a tautology (always true)</p>}
+          {isContradiction && <p>Formula is a contradiction (always false)</p>}
+          <KNF falseExpressions={falseExpressions} />
+          <DNF trueExpressions={trueExpressions} />
         </div>
       ) : (
         <p>At least 1 variable is required</p>
