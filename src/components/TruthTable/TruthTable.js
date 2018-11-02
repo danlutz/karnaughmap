@@ -1,8 +1,8 @@
 import React from 'react'
 import { Table, FormGroup, Label, Input, FormText } from 'reactstrap'
 import TableWrapper from '../Misc/TableWrapper'
-import KNF from '../NormalForms/KKNF'
-import DNF from '../NormalForms/KDNF'
+import CCNF from '../NormalForms/CCNF'
+import CDNF from '../NormalForms/CDNF'
 
 import useTruthTable from '../../hooks/useTruthTable'
 
@@ -17,12 +17,8 @@ const TruthTable = () => {
     expressions
   } = useTruthTable(2)
 
-  const trueExpressions = expressions
-    .filter(exp => exp.result)
-    .map(exp => exp.inputs)
-  const falseExpressions = expressions
-    .filter(exp => !exp.result)
-    .map(exp => exp.inputs)
+  const trueExpressions = expressions.filter(exp => exp.result)
+  const falseExpressions = expressions.filter(exp => !exp.result)
 
   const isTautology = falseExpressions.length === 0
   const isContradiction = trueExpressions.length === 0
@@ -91,8 +87,8 @@ const TruthTable = () => {
           </TableWrapper>
           {isTautology && <p>Formula is a tautology (always true)</p>}
           {isContradiction && <p>Formula is a contradiction (always false)</p>}
-          <KNF falseExpressions={falseExpressions} />
-          <DNF trueExpressions={trueExpressions} />
+          <CCNF falseExpressions={falseExpressions} />
+          <CDNF trueExpressions={trueExpressions} />
         </div>
       ) : (
         <p>At least 1 variable is required</p>

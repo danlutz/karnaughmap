@@ -52,6 +52,7 @@ const getCellValue = (rowNumber, cellNumber) => {
 const getBooleanExpressions = (rows, results) =>
   rows.map((inputs, rowNumber) => ({
     inputs,
+    rowNumber,
     result: results[rowNumber]
   }))
 
