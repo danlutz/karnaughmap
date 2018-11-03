@@ -65,14 +65,14 @@ export default n => {
 
   // Updates rows and headers
   const handleInputsChange = event => {
-    const { value } = event.target
+    const value = Number(event.target.value)
 
     setNumbersOfInputs(value)
     setHeaders(getHeaders(value))
     setRows(getRows(value))
   }
 
-  // Updates y row
+  // Updates y col
   const handleResultChange = event => {
     const {
       target: { name, value }
