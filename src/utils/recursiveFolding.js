@@ -1,37 +1,42 @@
 import isOdd from './isOdd'
 
-const calcElementsAddedOnFold = fold => Math.ceil(2 ** (fold - 1) / 2)
+// Calculates how many elements got added with fold n
+const calcElementsAddedOnFold = foldNumber =>
+  Math.ceil(2 ** (foldNumber - 1) / 2)
 
-const getNewPositionsArray = n => {
-  const newPositionsArray = []
-  for (let i = n; i < n * 2; i++) {
-    newPositionsArray.push(i)
+// Maps values of old matrix to new values
+const calcNewPositionValuesMap = numberOfElements => {
+  const newPositionsMap = new Map()
+
+  for (let i = 0; i < numberOfElements; i++) {
+    newPositionsMap.set(i, i + numberOfElements) // Maps 0 to 0 + n, etc.
   }
-  return newPositionsArray
+
+  return newPositionsMap
 }
 
 /* Vertical fold
 1. Copy old matrix
-2. Replace values with with counter values
+2. Replace values with values from map
 3. Reverse all rows in new matrix
 4. Combine all old and new rows
 */
 
 const foldVertical = (positionMatrix, elementsAddedOnFold) => {
-  const newPositions = getNewPositionsArray(elementsAddedOnFold)
-
-  // Replace values in reversedMatrix with new counter values
+  const newPositionsMap = calcNewPositionValuesMap(elementsAddedOnFold)
   const newPositionMatrix = []
+  const reversedNewPositionMatrix = []
+
+  // Copy all rows and replace their values with mapped value
   for (const row of positionMatrix) {
-    const tempRow = []
+    const newRow = []
     for (const value of row) {
-      tempRow.push(newPositions[value])
+      newRow.push(newPositionsMap.get(value))
     }
-    newPositionMatrix.push(tempRow)
+    newPositionMatrix.push(newRow)
   }
 
-  // Reverse whole matrix
-  const reversedNewPositionMatrix = []
+  // Reverse all rows of new matrix
   for (const row of newPositionMatrix) {
     reversedNewPositionMatrix.push(row.reverse())
   }
@@ -39,47 +44,48 @@ const foldVertical = (positionMatrix, elementsAddedOnFold) => {
   // Combine old and new rows
   const foldedMatrix = []
   for (let i = 0; i < positionMatrix.length; i++) {
-    foldedMatrix.push([...positionMatrix[i], ...reversedNewPositionMatrix[i]])
+    foldedMatrix.push([...positionMatrix[i], ...reversedNewPositionMatrix[i]]) // Combine old and new rows
   }
 
   return foldedMatrix
 }
 
 /* Horizontal fold
-1. Copy all old rows
-2. Replace values with counter values
+1. Copy all rows of old matrix
+2. Replace values with values from map
 3. Reverse order of new rows
-4. Append to old matrix
+4. Append new rows to old matrix
 */
-const foldHorizontal = (positionMatrix, elementsAddedOnFold) => {
-  const newPositions = getNewPositionsArray(elementsAddedOnFold)
 
-  // Copy all rows and replace their values with counterpart
+const foldHorizontal = (positionMatrix, elementsAddedOnFold) => {
+  const newPositionsMap = calcNewPositionValuesMap(elementsAddedOnFold)
   const newRows = []
+
+  // Copy all rows and replace their values with mapped value
   for (const row of positionMatrix) {
-    const tempRow = []
+    const newRow = []
     for (const value of row) {
-      tempRow.push(newPositions[value])
+      newRow.push(newPositionsMap.get(value))
     }
-    newRows.push(tempRow)
+    newRows.push(newRow)
   }
 
-  // Combine old and new rows
+  // Append reversed new rows to old matrix
   return [...positionMatrix, ...newRows.reverse()]
 }
 
 export const calcPositionMatrix = (
-  targetFold,
+  targetFoldNumber,
   currentFoldNumber = 0,
-  positionMatrix = [[0]]
+  positionMatrix = [[0]] // Starting matrix for fold 0 and 1
 ) => {
-  if (currentFoldNumber === targetFold) return positionMatrix
+  if (currentFoldNumber === targetFoldNumber) return positionMatrix
   else {
     currentFoldNumber++
 
     // Handle edge case
     if (currentFoldNumber === 1) {
-      return calcPositionMatrix(targetFold, currentFoldNumber, [[0]])
+      return calcPositionMatrix(targetFoldNumber, currentFoldNumber, [[0]])
     }
 
     // Check if horizontal fold
@@ -90,17 +96,15 @@ export const calcPositionMatrix = (
 
     if (isHorizontalFold) {
       // Horizontal fold
-
       return calcPositionMatrix(
-        targetFold,
+        targetFoldNumber,
         currentFoldNumber,
         foldHorizontal(positionMatrix, elementsAddedOnFold)
       )
     } else {
       // Vertical fold
-
       return calcPositionMatrix(
-        targetFold,
+        targetFoldNumber,
         currentFoldNumber,
         foldVertical(positionMatrix, elementsAddedOnFold)
       )
@@ -108,11 +112,7 @@ export const calcPositionMatrix = (
   }
 }
 
-export const calcPosition = elementNumber => {
-  const foldNumber =
-    elementNumber !== 0 ? Math.floor(Math.log2(elementNumber)) + 1 : 0
-  const positionMatrix = calcPositionMatrix(foldNumber + 1)
-
+export const calcPosition = (elementNumber, positionMatrix = []) => {
   // Find coordinates in positionMatrix
   for (let row = 0; row < positionMatrix.length; row++) {
     for (let col = 0; col < positionMatrix[row].length; col++) {

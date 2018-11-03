@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { conjunctInputs } from '../../utils/cdnf'
 import styled from 'styled-components'
+import { conjunctInputs } from '../../utils/cdnf'
 
 const StyledFormula = styled.div`
-  grid-column: ${props => (props.left ? 'left' : 'right')};
-  grid-row: ${props => (props.top ? 'top' : 'bottom')};
+  grid-column: ${props => props.column + 1};
+  grid-row: ${props => props.row + 1};
 
   background-color: ${props => (props.result ? '#01FF70' : '#fff')};
   padding: 1rem;
@@ -22,12 +22,12 @@ const StyledFormula = styled.div`
   }
 `
 
-const KarnaughMapElement = ({ booleanExpression, top, left }) => {
+const KarnaughMapElement = ({ booleanExpression, row, column }) => {
   const { inputs, rowNumber, result } = booleanExpression
   const formula = conjunctInputs(inputs)
 
   return (
-    <StyledFormula result={result} top={top} left={left}>
+    <StyledFormula result={result} row={row} column={column}>
       {formula}
       <span className="rowNumber">#{rowNumber}</span>
     </StyledFormula>
@@ -40,8 +40,8 @@ KarnaughMapElement.propTypes = {
     rowNumber: PropTypes.number,
     result: PropTypes.number
   }),
-  top: PropTypes.bool.isRequired,
-  left: PropTypes.bool.isRequired
+  row: PropTypes.number.isRequired,
+  column: PropTypes.number.isRequired
 }
 
 export default KarnaughMapElement
