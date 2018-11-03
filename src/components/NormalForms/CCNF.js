@@ -5,8 +5,6 @@ import { getCanocialConjuctiveNormalForm } from '../../utils/ccnf'
 const CCNF = ({ falseExpressions = [] }) => {
   if (falseExpressions.length === 0) return null
 
-  console.log(falseExpressions)
-
   const ccnf = getCanocialConjuctiveNormalForm(falseExpressions, true)
 
   return (
