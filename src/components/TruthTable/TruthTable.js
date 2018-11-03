@@ -24,7 +24,7 @@ const TruthTable = () => {
     results,
     handleResultChange,
     expressions
-  } = useTruthTable(3)
+  } = useTruthTable(2)
   const [showTruthTable, setShowTruthTable] = useState(true)
 
   const trueExpressions = expressions.filter(exp => exp.result)
@@ -112,7 +112,7 @@ const TruthTable = () => {
           />
         </>
       ) : (
-        <p>At least 1 variable is required</p>
+        <p>At least 1 input is required</p>
       )}
     </>
   )
