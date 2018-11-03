@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import HorizontalScrollWrapper from '../Misc/HorizontalScrollWrapper'
 import KarnaughMapElement from './KarnaughMapElement'
 import { calcPositionMatrix, calcPosition } from '../../utils/recursiveFolding'
+import { supportsCSSGrid } from '../../utils/checkBrowserSupport'
 
 const StyledKarnaughMap = styled.div`
   display: grid;
@@ -17,6 +18,21 @@ const KarnaughMap = ({ booleanExpressions = [], numberOfInputs }) => {
   return (
     <>
       <h2>Karnaugh Map</h2>
+      {!supportsCSSGrid() && (
+        <p>
+          You need to use a{' '}
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid#Browser_compatibility"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            browser that supports CSS Grid
+          </a>{' '}
+          <span role="img" aria-label="warning emoji">
+            ⚠️
+          </span>
+        </p>
+      )}
       <HorizontalScrollWrapper>
         <StyledKarnaughMap>
           {booleanExpressions.map(booleanExpression => {
