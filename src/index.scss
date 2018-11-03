@@ -1,5 +1,15 @@
 @import '~bootstrap/scss/bootstrap';
 
+html,
+body {
+  background-color: #0f0f0f;
+}
+
+main {
+  padding: 2rem 0;
+  background-color: #fff;
+}
+
 .btn {
   margin-bottom: 1rem;
 }

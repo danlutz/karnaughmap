@@ -1,13 +1,21 @@
 import React from 'react'
 import { Container } from 'reactstrap'
 import TruthTable from './components/TruthTable/TruthTable'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
-    <Container>
-      <h1>Karnaugh map</h1>
-      <TruthTable />
-    </Container>
+    <>
+      <Navbar />
+      <main>
+        <Container>
+          <h1>Karnaugh Map Generator</h1>
+          <TruthTable />
+        </Container>
+      </main>
+      <Footer />
+    </>
   )
 }
 
