@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { FormGroup, Label, Input } from 'reactstrap'
 import HorizontalScrollWrapper from '../Misc/HorizontalScrollWrapper'
 import KarnaughMapElement from './KarnaughMapElement'
 import { calcPositionMatrix, calcPosition } from '../../utils/recursiveFolding'
-import { supportsCSSGrid } from '../../utils/checkBrowserSupport'
+import CSSGridWarning from '../Misc/CSSGridWarning'
 
 const StyledKarnaughMap = styled.div`
   display: grid;
@@ -12,27 +13,38 @@ const StyledKarnaughMap = styled.div`
   grid-auto-rows: 1fr;
 `
 
+const InlineBox = styled.span`
+  background: #01ff70;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+  margin-bottom: -0.125rem;
+`
+
 const KarnaughMap = ({ booleanExpressions = [], numberOfInputs }) => {
   const positionMatrix = calcPositionMatrix(numberOfInputs + 1)
+  const [displayType, setDisplayType] = useState('input names')
 
   return (
     <>
       <h2>Karnaugh Map</h2>
-      {!supportsCSSGrid() && (
-        <p>
-          You need to use a{' '}
-          <a
-            href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid#Browser_compatibility"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            browser that supports CSS Grid
-          </a>{' '}
-          <span role="img" aria-label="warning emoji">
-            ⚠️
-          </span>
-        </p>
-      )}
+      <CSSGridWarning />
+      <p>
+        <InlineBox /> = True expression
+      </p>
+      <FormGroup>
+        <Label>Display type</Label>
+        <Input
+          type="select"
+          name="displayType"
+          id="displayType"
+          value={displayType}
+          onChange={e => setDisplayType(e.target.value)}
+        >
+          <option value="input names">Input names</option>
+          <option value="binary">Binary values</option>
+        </Input>
+      </FormGroup>
       <HorizontalScrollWrapper>
         <StyledKarnaughMap>
           {booleanExpressions.map(booleanExpression => {
@@ -44,6 +56,7 @@ const KarnaughMap = ({ booleanExpressions = [], numberOfInputs }) => {
                 booleanExpression={booleanExpression}
                 column={column}
                 row={row}
+                displayType={displayType}
                 key={rowNumber}
               />
             )
