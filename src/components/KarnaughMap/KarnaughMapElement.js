@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { conjunctInputs } from '../../utils/cdnf'
 
+const reduceToBinary = inputs =>
+  inputs.reduce((binaryString, input) => `${binaryString}, ${input}`)
+
 const StyledFormula = styled.div`
   grid-column: ${props => props.column + 1};
   grid-row: ${props => props.row + 1};
@@ -22,9 +25,15 @@ const StyledFormula = styled.div`
   }
 `
 
-const KarnaughMapElement = ({ booleanExpression, row, column }) => {
+const KarnaughMapElement = ({
+  booleanExpression,
+  row,
+  column,
+  displayType
+}) => {
   const { inputs, rowNumber, result } = booleanExpression
-  const formula = conjunctInputs(inputs)
+  const formula =
+    displayType === 'binary' ? reduceToBinary(inputs) : conjunctInputs(inputs)
 
   return (
     <StyledFormula result={result} row={row} column={column}>
@@ -41,7 +50,8 @@ KarnaughMapElement.propTypes = {
     result: PropTypes.number
   }),
   row: PropTypes.number.isRequired,
-  column: PropTypes.number.isRequired
+  column: PropTypes.number.isRequired,
+  displayType: PropTypes.string.isRequired
 }
 
 export default KarnaughMapElement
