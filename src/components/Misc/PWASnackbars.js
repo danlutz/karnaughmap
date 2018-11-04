@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
 import useProgressiveWebApp from '../../hooks/useProgressiveWebApp'
 
 const PWASnackbars = () => {
@@ -31,16 +29,6 @@ const PWASnackbars = () => {
             App has been installed, it now works offline!
           </span>
         }
-        action={[
-          <IconButton
-            key="close"
-            aria-label="Close"
-            color="inherit"
-            onClick={() => setFirstInstallOpen(false)}
-          >
-            <CloseIcon />
-          </IconButton>
-        ]}
       />
       <Snackbar
         anchorOrigin={{
@@ -58,16 +46,6 @@ const PWASnackbars = () => {
             New content available! Please close and reopen tab.
           </span>
         }
-        action={[
-          <IconButton
-            key="close"
-            aria-label="Close"
-            color="inherit"
-            onClick={() => setNewContentOpen(false)}
-          >
-            <CloseIcon />
-          </IconButton>
-        ]}
       />
     </>
   )
