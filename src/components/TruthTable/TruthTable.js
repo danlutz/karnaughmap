@@ -4,6 +4,8 @@ import {
   FormGroup,
   Label,
   Input,
+  InputGroup,
+  InputGroupAddon,
   FormText,
   Collapse,
   Button
@@ -34,6 +36,8 @@ const TruthTable = () => {
   const {
     numberOfInputs,
     handleInputsChange,
+    increaseInputs,
+    decreaseInputs,
     headers,
     rows,
     results,
@@ -52,13 +56,29 @@ const TruthTable = () => {
     <>
       <FormGroup>
         <Label for="numberOfInputs">Number of boolean variables</Label>
-        <Input
-          type="number"
-          value={numberOfInputs}
-          min="1"
-          max="32"
-          onChange={handleInputsChange}
-        />
+        <InputGroup>
+          <Input
+            type="number"
+            value={numberOfInputs}
+            min="1"
+            max="32"
+            onChange={handleInputsChange}
+          />
+          <InputGroupAddon>
+            <Button
+              onClick={increaseInputs}
+              style={{ transform: 'rotate(180deg)', margin: '0 10px' }}
+            >
+              <span className="dropdown-toggle" />
+            </Button>
+          </InputGroupAddon>
+          <InputGroupAddon>
+            <Button onClick={decreaseInputs}>
+              <span className="dropdown-toggle" />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+
         <FormText>
           Please note you are generating 2 ^ n * (n + 1) table cells, numbers
           bigger than 12 will probably crash your browser{' '}

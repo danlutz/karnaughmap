@@ -72,6 +72,24 @@ export default n => {
     setRows(getRows(value))
   }
 
+  const increaseInputs = () => {
+    if (numberOfInputs < 32) {
+      const newValue = numberOfInputs + 1
+      setNumbersOfInputs(newValue)
+      setHeaders(getHeaders(newValue))
+      setRows(getRows(newValue))
+    }
+  }
+
+  const decreaseInputs = () => {
+    if (numberOfInputs > 0) {
+      const newValue = numberOfInputs - 1
+      setNumbersOfInputs(newValue)
+      setHeaders(getHeaders(newValue))
+      setRows(getRows(newValue))
+    }
+  }
+
   // Updates y col
   const toggleResult = rowNumber => {
     setResults({
@@ -83,6 +101,8 @@ export default n => {
   return {
     numberOfInputs,
     handleInputsChange,
+    increaseInputs,
+    decreaseInputs,
     headers,
     rows,
     results,
