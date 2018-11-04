@@ -23,7 +23,7 @@ const GreenBox = styled.span`
 
 const KarnaughMap = ({ booleanExpressions = [], numberOfInputs }) => {
   const positionMatrix = calcPositionMatrix(numberOfInputs + 1)
-  const [displayType, setDisplayType] = useState('input names')
+  const [displayType, setDisplayType] = useState('names')
 
   return (
     <>
@@ -41,8 +41,9 @@ const KarnaughMap = ({ booleanExpressions = [], numberOfInputs }) => {
           value={displayType}
           onChange={e => setDisplayType(e.target.value)}
         >
-          <option value="input names">Input names</option>
+          <option value="names">Input names</option>
           <option value="binary">Binary values</option>
+          <option value="rowNumber">Just row number</option>
         </Input>
       </FormGroup>
       <HorizontalScrollWrapper>

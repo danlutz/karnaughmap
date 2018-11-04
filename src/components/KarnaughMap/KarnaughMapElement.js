@@ -3,27 +3,43 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { conjunctInputs } from '../../utils/cdnf'
 
-const reduceToBinaryString = inputs =>
-  inputs.reduce((binaryString, input) => `${binaryString}, ${input}`)
-
 const StyledFormula = styled.div`
-  grid-column: ${props => props.column + 1};
-  grid-row: ${props => props.row + 1};
+  grid-column: ${({ column }) => column + 1};
+  grid-row: ${({ row }) => row + 1};
 
-  background-color: ${props => (props.result ? '#01FF70' : '#fff')};
+  background-color: ${({ result }) => (result ? '#01FF70' : '#fff')};
   padding: 1rem;
   border: 1px solid #f1f1f1;
   position: relative;
   white-space: nowrap;
 
   .rowNumber {
-    position: absolute;
+    ${({ displayType }) =>
+      displayType === 'rowNumber' &&
+      'display: none;'} // Do not show hashed rowNumber twice
+      position: absolute;
     top: 0;
     right: 0;
     font-size: 9px;
     padding: 0.25rem;
   }
 `
+
+const reduceToBinaryString = inputs =>
+  inputs.reduce((binaryString, input) => `${binaryString}, ${input}`)
+
+const getFormula = (inputs = [], displayType, rowNumber) => {
+  switch (displayType) {
+    case 'names':
+      return conjunctInputs(inputs)
+    case 'binary':
+      return reduceToBinaryString(inputs)
+    case 'rowNumber':
+      return rowNumber
+    default:
+      return conjunctInputs(inputs)
+  }
+}
 
 const KarnaughMapElement = ({
   booleanExpression,
@@ -32,13 +48,15 @@ const KarnaughMapElement = ({
   displayType
 }) => {
   const { inputs, rowNumber, result } = booleanExpression
-  const formula =
-    displayType === 'binary'
-      ? reduceToBinaryString(inputs)
-      : conjunctInputs(inputs)
+  const formula = getFormula(inputs, displayType, rowNumber)
 
   return (
-    <StyledFormula result={result} row={row} column={column}>
+    <StyledFormula
+      result={result}
+      row={row}
+      column={column}
+      displayType={displayType}
+    >
       {formula}
       <span className="rowNumber">#{rowNumber}</span>
     </StyledFormula>
