@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import useProgressiveWebApp from '../../hooks/useProgressiveWebApp'
 
+const anchorOrigin = {
+  vertical: 'bottom',
+  horizontal: 'right'
+}
+
 const PWASnackbars = () => {
   const [firstInstallOpen, setFirstInstallOpen] = useState(false)
   const [newContentOpen, setNewContentOpen] = useState(false)
@@ -14,10 +19,7 @@ const PWASnackbars = () => {
   return (
     <>
       <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right'
-        }}
+        anchorOrigin={anchorOrigin}
         open={firstInstallOpen}
         autoHideDuration={3000}
         onClose={() => setFirstInstallOpen(false)}
@@ -31,10 +33,7 @@ const PWASnackbars = () => {
         }
       />
       <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right'
-        }}
+        anchorOrigin={anchorOrigin}
         open={newContentOpen}
         autoHideDuration={3000}
         onClose={() => setNewContentOpen(false)}
