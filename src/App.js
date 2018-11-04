@@ -6,6 +6,7 @@ import Configuration from './components/Configuration/Configuration'
 import TruthTable from './components/TruthTable/TruthTable'
 import NormalForms from './components/NormalForms/NormalForms'
 import KarnaughMap from './components/KarnaughMap/KarnaughMap'
+import PWASnackbars from './components/Misc/PWASnackbars'
 
 import useTruthTable from './hooks/useTruthTable'
 
@@ -70,6 +71,7 @@ const App = () => {
         </Container>
       </main>
       <Footer />
+      <PWASnackbars />
     </>
   )
 }
