@@ -8,14 +8,14 @@ const ResultToggleButton = styled(Button)`
   padding: 0.25rem 0.75rem;
   margin: 0;
   font-size: 0.85rem;
-  background-color: ${({ isTrue }) => (isTrue ? '#01ff70' : '#6c757d')};
-  border-color: ${({ isTrue }) => (isTrue ? '#01ff70' : '#6c757d')};
-  color: ${({ isTrue }) => (isTrue ? '#000' : '#fff')};
+  background-color: ${({ istrue }) => (istrue ? '#01ff70' : '#6c757d')};
+  border-color: ${({ istrue }) => (istrue ? '#01ff70' : '#6c757d')};
+  color: ${({ istrue }) => (istrue ? '#000' : '#fff')};
 
   &:hover {
-    background-color: ${({ isTrue }) => (isTrue ? '#01ff70' : '#6c757d')};
-    border-color: ${({ isTrue }) => (isTrue ? '#01ff70' : '#6c757d')};
-    color: ${({ isTrue }) => (isTrue ? '#000' : '#fff')};
+    background-color: ${({ istrue }) => (istrue ? '#01ff70' : '#6c757d')};
+    border-color: ${({ istrue }) => (istrue ? '#01ff70' : '#6c757d')};
+    color: ${({ istrue }) => (istrue ? '#000' : '#fff')};
   }
 `
 
@@ -63,7 +63,7 @@ const TruthTable = ({
                     <td>
                       <ResultToggleButton
                         onClick={() => toggleResult(rowNumber)}
-                        isTrue={result}
+                        istrue={result}
                       >
                         {result ? 'True' : 'False'}
                       </ResultToggleButton>
