@@ -73,14 +73,10 @@ export default n => {
   }
 
   // Updates y col
-  const handleResultChange = event => {
-    const {
-      target: { name, value }
-    } = event
-
+  const toggleResult = rowNumber => {
     setResults({
       ...results,
-      [name]: Number(value)
+      [rowNumber]: results[rowNumber] === 1 ? 0 : 1
     })
   }
 
@@ -90,7 +86,7 @@ export default n => {
     headers,
     rows,
     results,
-    handleResultChange,
+    toggleResult,
     expressions
   }
 }

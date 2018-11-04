@@ -9,7 +9,7 @@ const CCNF = ({ falseExpressions = [] }) => {
 
   return (
     <div>
-      <h2>Canonical Conjunctive Normal Form</h2>
+      <h3>Canonical Conjunctive Normal Form</h3>
       <p>{ccnf}</p>
     </div>
   )

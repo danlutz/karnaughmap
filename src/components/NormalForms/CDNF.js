@@ -9,7 +9,7 @@ const CDNF = ({ trueExpressions = [] }) => {
 
   return (
     <div>
-      <h2>Canonical Disjunctive Normal Form</h2>
+      <h3>Canonical Disjunctive Normal Form</h3>
       <p>{cdnf}</p>
     </div>
   )

@@ -8,12 +8,22 @@ import {
   Collapse,
   Button
 } from 'reactstrap'
+import styled from 'styled-components'
 import HorizontalScrollWrapper from '../Misc/HorizontalScrollWrapper'
-import CCNF from '../NormalForms/CCNF'
-import CDNF from '../NormalForms/CDNF'
+import NormalForms from '../NormalForms/NormalForms'
 import KarnaughMap from '../KarnaughMap/KarnaughMap'
 
 import useTruthTable from '../../hooks/useTruthTable'
+
+const ResultToggleButton = styled.button`
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  background-color: ${props => (props.value === 1 ? '#01ff70' : '#6c757d')};
+  border-color: ${props => (props.value === 1 ? '#01ff70' : '#6c757d')};
+  color: ${props => (props.value === 1 ? '#000' : '#fff')};
+`
 
 const TruthTable = () => {
   const {
@@ -22,7 +32,7 @@ const TruthTable = () => {
     headers,
     rows,
     results,
-    handleResultChange,
+    toggleResult,
     expressions
   } = useTruthTable(2)
   const [showTruthTable, setShowTruthTable] = useState(true)
@@ -62,6 +72,7 @@ const TruthTable = () => {
         <>
           <Collapse isOpen={showTruthTable}>
             <HorizontalScrollWrapper>
+              <h2>Truth Table</h2>
               <Table bordered striped>
                 <thead>
                   <tr>
@@ -80,32 +91,38 @@ const TruthTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((row, rowNumber) => (
-                    <tr key={rowNumber}>
-                      {[
-                        ...row,
-                        <select
-                          name={rowNumber}
-                          value={results[rowNumber]}
-                          onChange={handleResultChange}
-                        >
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                        </select>
-                      ].map((cell, cellNumber) => (
-                        <td key={cellNumber}>{cell}</td>
-                      ))}
-                    </tr>
-                  ))}
+                  {rows.map((row, rowNumber) => {
+                    const result = results[rowNumber]
+                    return (
+                      <tr key={rowNumber}>
+                        {[
+                          ...row,
+                          <ResultToggleButton
+                            onClick={() => toggleResult(rowNumber)}
+                            className=""
+                            value={result}
+                          >
+                            {result === 1 ? 'True' : 'False'}
+                          </ResultToggleButton>
+                        ].map((cell, cellNumber) => (
+                          <td key={cellNumber}>{cell}</td>
+                        ))}
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </Table>
             </HorizontalScrollWrapper>
           </Collapse>
 
-          {isTautology && <p>Formula is a tautology (always true)</p>}
-          {isContradiction && <p>Formula is a contradiction (always false)</p>}
-          <CCNF falseExpressions={falseExpressions} />
-          <CDNF trueExpressions={trueExpressions} />
+          <NormalForms
+            trueExpressions={trueExpressions}
+            falseExpressions={falseExpressions}
+          />
+
+          {isTautology && <p>Formula is a tautology (always true).</p>}
+          {isContradiction && <p>Formula is a contradiction (always false).</p>}
+
           <KarnaughMap
             booleanExpressions={expressions}
             numberOfInputs={numberOfInputs}
