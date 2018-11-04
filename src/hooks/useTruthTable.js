@@ -63,30 +63,27 @@ export default n => {
   const [rows, setRows] = useState(getRows(numberOfInputs))
   const expressions = getBooleanExpressions(rows, results)
 
+  const updateState = newNumberOfInputs => {
+    setNumbersOfInputs(newNumberOfInputs)
+    setHeaders(getHeaders(newNumberOfInputs))
+    setRows(getRows(newNumberOfInputs))
+  }
+
   // Updates rows and headers
   const handleInputsChange = event => {
     const value = Number(event.target.value)
-
-    setNumbersOfInputs(value)
-    setHeaders(getHeaders(value))
-    setRows(getRows(value))
+    updateState(value)
   }
 
   const increaseInputs = () => {
     if (numberOfInputs < 32) {
-      const newValue = numberOfInputs + 1
-      setNumbersOfInputs(newValue)
-      setHeaders(getHeaders(newValue))
-      setRows(getRows(newValue))
+      updateState(numberOfInputs + 1)
     }
   }
 
   const decreaseInputs = () => {
-    if (numberOfInputs > 0) {
-      const newValue = numberOfInputs - 1
-      setNumbersOfInputs(newValue)
-      setHeaders(getHeaders(newValue))
-      setRows(getRows(newValue))
+    if (numberOfInputs > 1) {
+      updateState(numberOfInputs - 1)
     }
   }
 
