@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { FormGroup, Label, Input } from 'reactstrap'
 import HorizontalScrollWrapper from '../Misc/HorizontalScrollWrapper'
 import KarnaughMapElement from './KarnaughMapElement'
-import { calcPositionMatrix, calcPosition } from '../../utils/recursiveFolding'
 import CSSGridWarning from '../Misc/CSSGridWarning'
+import { calcPositionMatrix, calcPosition } from '../../utils/recursiveFolding'
 
 const StyledKarnaughMap = styled.div`
   display: grid;
@@ -13,7 +13,7 @@ const StyledKarnaughMap = styled.div`
   grid-auto-rows: 1fr;
 `
 
-const InlineBox = styled.span`
+const GreenBox = styled.span`
   background: #01ff70;
   height: 1rem;
   width: 1rem;
@@ -30,7 +30,7 @@ const KarnaughMap = ({ booleanExpressions = [], numberOfInputs }) => {
       <h2>Karnaugh Map</h2>
       <CSSGridWarning />
       <p>
-        <InlineBox /> = True expression
+        <GreenBox /> = True expression
       </p>
       <FormGroup>
         <Label>Display type</Label>

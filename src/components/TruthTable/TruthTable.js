@@ -63,10 +63,9 @@ const TruthTable = ({
                     <td>
                       <ResultToggleButton
                         onClick={() => toggleResult(rowNumber)}
-                        className=""
                         value={result}
                       >
-                        {result === 1 ? 'True' : 'False'}
+                        {result ? 'True' : 'False'}
                       </ResultToggleButton>
                     </td>
                   </tr>

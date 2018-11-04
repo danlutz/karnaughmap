@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { conjunctInputs } from '../../utils/cdnf'
 
-const reduceToBinary = inputs =>
+const reduceToBinaryString = inputs =>
   inputs.reduce((binaryString, input) => `${binaryString}, ${input}`)
 
 const StyledFormula = styled.div`
@@ -33,7 +33,9 @@ const KarnaughMapElement = ({
 }) => {
   const { inputs, rowNumber, result } = booleanExpression
   const formula =
-    displayType === 'binary' ? reduceToBinary(inputs) : conjunctInputs(inputs)
+    displayType === 'binary'
+      ? reduceToBinaryString(inputs)
+      : conjunctInputs(inputs)
 
   return (
     <StyledFormula result={result} row={row} column={column}>
