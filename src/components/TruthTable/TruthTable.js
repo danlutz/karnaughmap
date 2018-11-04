@@ -15,14 +15,19 @@ import KarnaughMap from '../KarnaughMap/KarnaughMap'
 
 import useTruthTable from '../../hooks/useTruthTable'
 
-const ResultToggleButton = styled.button`
+const ResultToggleButton = styled(Button)`
   padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
+  margin: 0;
   font-size: 0.85rem;
   background-color: ${props => (props.value === 1 ? '#01ff70' : '#6c757d')};
   border-color: ${props => (props.value === 1 ? '#01ff70' : '#6c757d')};
   color: ${props => (props.value === 1 ? '#000' : '#fff')};
+
+  &:hover {
+    background-color: ${props => (props.value === 1 ? '#01ff70' : '#6c757d')};
+    border-color: ${props => (props.value === 1 ? '#01ff70' : '#6c757d')};
+    color: ${props => (props.value === 1 ? '#000' : '#fff')};
+  }
 `
 
 const TruthTable = () => {
@@ -92,9 +97,11 @@ const TruthTable = () => {
                     const result = results[rowNumber]
                     return (
                       <tr key={rowNumber}>
-                        {[
-                          rowNumber,
-                          ...row,
+                        <td>{rowNumber}</td>
+                        {row.map((cell, cellNumber) => (
+                          <td key={cellNumber}>{cell}</td>
+                        ))}
+                        <td>
                           <ResultToggleButton
                             onClick={() => toggleResult(rowNumber)}
                             className=""
@@ -102,9 +109,7 @@ const TruthTable = () => {
                           >
                             {result === 1 ? 'True' : 'False'}
                           </ResultToggleButton>
-                        ].map((cell, cellNumber) => (
-                          <td key={cellNumber}>{cell}</td>
-                        ))}
+                        </td>
                       </tr>
                     )
                   })}
