@@ -22,7 +22,20 @@ const NormalForms = ({ falseExpressions = [], trueExpressions = [] }) => {
 }
 
 NormalForms.propTypes = {
-  expressions: PropTypes.array
+  trueExpressions: PropTypes.arrayOf(
+    PropTypes.shape({
+      inputs: PropTypes.arrayOf(PropTypes.number),
+      rowNumber: PropTypes.number,
+      result: PropTypes.number
+    })
+  ).isRequired,
+  falseExpressions: PropTypes.arrayOf(
+    PropTypes.shape({
+      inputs: PropTypes.arrayOf(PropTypes.number),
+      rowNumber: PropTypes.number,
+      result: PropTypes.number
+    })
+  ).isRequired
 }
 
 export default NormalForms
