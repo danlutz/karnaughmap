@@ -12,6 +12,7 @@ const StyledFormula = styled.div`
   border: 1px solid #f1f1f1;
   position: relative;
   white-space: nowrap;
+  text-align: center;
 
   .rowNumber {
     ${({ displayType }) =>
