@@ -65,29 +65,26 @@ const TruthTable = () => {
           </span>
         </FormText>
       </FormGroup>
-      <Button onClick={() => setShowTruthTable(!showTruthTable)}>
-        {showTruthTable ? 'Hide' : 'Show'} truth table
-      </Button>
       {numberOfInputs > 0 ? (
         <>
+          <Button onClick={() => setShowTruthTable(!showTruthTable)}>
+            {showTruthTable ? 'Hide' : 'Show'} truth table
+          </Button>
           <Collapse isOpen={showTruthTable}>
             <HorizontalScrollWrapper>
               <h2>Truth Table</h2>
               <Table bordered striped>
                 <thead>
                   <tr>
-                    {[...headers, 'y'].map(
-                      (header, key) =>
-                        header !== 'y' ? (
-                          <th key={key}>
-                            <span>
-                              x<sub>{header}</sub>
-                            </span>
-                          </th>
-                        ) : (
-                          <th key={key}>y</th>
-                        )
-                    )}
+                    <th style={{ width: '20px' }}>#</th>
+                    {headers.map((header, key) => (
+                      <th key={key}>
+                        <span>
+                          x<sub>{header}</sub>
+                        </span>
+                      </th>
+                    ))}
+                    <th>y</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,6 +93,7 @@ const TruthTable = () => {
                     return (
                       <tr key={rowNumber}>
                         {[
+                          rowNumber,
                           ...row,
                           <ResultToggleButton
                             onClick={() => toggleResult(rowNumber)}
