@@ -11,7 +11,7 @@ import { ReactComponent as Logo } from '../logo.svg'
 
 const Navigation = () => {
   return (
-    <Navbar color="dark" dark expand="md">
+    <Navbar color="0f0f0f" dark expand="md">
       <Container>
         <NavbarBrand href="/">
           <Logo style={{ width: '30px', height: '30px' }} />
