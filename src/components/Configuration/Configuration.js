@@ -18,7 +18,7 @@ const Configuration = ({
 }) => {
   return (
     <FormGroup>
-      <Label for="numberOfInputs">Number of boolean variables</Label>
+      <Label for="numberOfInputs">Number of inputs</Label>
       <InputGroup>
         <Input
           type="number"
